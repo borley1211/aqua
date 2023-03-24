@@ -10,8 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-go@v2
+    - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
+    - uses: actions/setup-go@bfdd3570ce990073878bf10f6b2d79082de49492 # v2
       with:
         go-version: '1.17.5'
 
@@ -19,14 +19,14 @@ jobs:
     - run: echo "${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua/bin" >> "$GITHUB_PATH"
     - run: aqua i
 
-    - uses: suzuki-shunsuke/github-action-golangci-lint@v0.1.3
+    - uses: suzuki-shunsuke/github-action-golangci-lint@21eb516c4e9a92089b8060a2c00326224b33dbfb # v0.1.3
 
     - run: go test -v ./... -race -covermode=atomic
 
     - name: Generate token
       id: generate_token
       if: startsWith(github.ref, 'refs/tags/')
-      uses: tibdex/github-app-token@v1
+      uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92 # v1
       with:
         app_id: ${{ secrets.APP_ID }}
         private_key: ${{ secrets.APP_PRIVATE_KEY }}
@@ -39,7 +39,7 @@ jobs:
     - name: Unshallow
       run: git fetch --prune --unshallow
     - name: Run GoReleaser
-      uses: goreleaser/goreleaser-action@v2
+      uses: goreleaser/goreleaser-action@b953231f81b8dfd023c58e0854a721e35037f28b # v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
         version: latest
